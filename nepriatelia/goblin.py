@@ -1,0 +1,5 @@
+from nepriatel import nepriatel
+
+class goblin(nepriatel):
+    def __init__(self, id):
+        super().__init__(id, nazov="goblin", zivoty=20, utok=5, xp_odmena=10, zlato_odmena=10)
