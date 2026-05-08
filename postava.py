@@ -2,11 +2,13 @@
 import random
 
 class postava:
-    def __init__(self, id, nazov, zivoty, utok):
+    def __init__(self, id, nazov, max_zivoty, utok):
         self.id=id
         self.nazov=nazov
-        self.zivoty=zivoty
+        self.max_zivoty=max_zivoty
         self.utok=utok
+
+        self.zivoty=self.max_zivoty
 
     def func_zautoc(self, ciel):
         #generuj poskodenie
