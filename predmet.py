@@ -2,10 +2,11 @@
 import random
 
 class predmet:
-    def __init__(self, nazov, typ, hodnota):
+    def __init__(self, nazov, typ, hodnota, konzumovatelny):
         self.nazov=nazov
         self.typ=typ
         self.hodnota=hodnota
+        self.konzumovatelny=konzumovatelny
 
     def __str__(self):
         return f"Tento predmet sa vola: {self.nazov}, je typu: {self.typ} a jeho hodnota je: {self.hodnota}."
@@ -18,5 +19,7 @@ class predmet:
     def get_typ(self):
         return(self.typ)
         #vrat hodnotu
+    def get_konzumovatelny(self):
+        return(self.konzumovatelny)
     def get_hodnota(self):
         return(self.hodnota)
