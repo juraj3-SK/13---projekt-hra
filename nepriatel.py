@@ -13,3 +13,4 @@ class nepriatel(postava):
     #     poskodenie=self.utok+random.randint(3,8)
     #     print(f"Utok nepriatela {self.nazov}, a.k.a. id={self.id}, je {poskodenie}.")
     #     ciel.func_zranenie(poskodenie)
+    #
