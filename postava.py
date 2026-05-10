@@ -13,14 +13,25 @@ class postava:
     def func_zautoc(self, ciel):
         #generuj poskodenie
         poskodenie=self.utok+random.randint(1,6)
-        print(f"Utok hraca {self.nazov}, a.k.a. id={self.id}, je {poskodenie}.")
+        # Kritický zásah má 10 % šancu a dáva dvojnásobné poškodenie.
+        tempVar=random.randint(1,10)
+        print(f"vygenerovana pravdepodobnost sa rovna: {tempVar}")
+        if (tempVar==1):
+            print("Nasleduje kriticky zasah.")
+            poskodenie=2*poskodenie
+        print(type(self))
+        if (type(self)=="class 'hrac.hrac'"):
+            print(f"Utok hraca {self.nazov}, a.k.a. id={self.id}, je {poskodenie}.")
+        else:
+            print(f"Utok nepriatela {self.nazov}, a.k.a. id={self.id}, je {poskodenie}.")
+
         ciel.func_zranenie(poskodenie)
-        
+
     def func_zranenie(self, damage):
         self.zivoty-=damage
         if (self.zivoty<0):
             self.zivoty=0
-        if (self.func_je_ziva):
+        if (self.func_je_ziva()):
             print(f"{self.nazov}, a.k.a. id={self.id}, bol zasiahnuty, zostava mu pocet zivotov: {self.zivoty}")
         else:
             print(f"{self.nazov}, a.k.a. id={self.id}, bol zabity.")

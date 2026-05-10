@@ -8,8 +8,8 @@ class nepriatel(postava):
         self.zlato_odmena=zlato_odmena
         self.xp_odmena=xp_odmena
 
-    def func_zautoc(self, ciel):
-        #generuj poskodenie
-        poskodenie=self.utok+random.randint(3,8)
-        print(f"Utok nepriatela {self.nazov}, a.k.a. id={self.id}, je {poskodenie}.")
-        ciel.func_zranenie(poskodenie)
+    # def func_zautoc(self, ciel):
+    #     #generuj poskodenie
+    #     poskodenie=self.utok+random.randint(3,8)
+    #     print(f"Utok nepriatela {self.nazov}, a.k.a. id={self.id}, je {poskodenie}.")
+    #     ciel.func_zranenie(poskodenie)

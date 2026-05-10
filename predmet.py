@@ -9,7 +9,10 @@ class predmet:
         self.konzumovatelny=konzumovatelny
 
     def __str__(self):
-        return f"Tento predmet sa vola: {self.nazov}, je typu: {self.typ} a jeho hodnota je: {self.hodnota}."
+        if (self.konzumovatelny==1):
+            return f"Tento predmet sa vola: {self.nazov}, je typu: {self.typ} a jeho hodnota je: {self.hodnota}. Mozes ho pouzit len raz."
+        else:
+            return f"Tento predmet sa vola: {self.nazov}, je typu: {self.typ} a jeho hodnota je: {self.hodnota}. Mozes ho pouzit viackrat."
     
     #getters
     #vrat nazov
