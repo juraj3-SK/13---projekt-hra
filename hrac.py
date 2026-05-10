@@ -71,6 +71,7 @@ class hrac(postava):
         text+=self.func_vypis_inventar()
         return text
 
+
     def func_vypis_inventar(self):
         text=""
         if (len(self.inventar)==0):
