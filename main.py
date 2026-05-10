@@ -70,7 +70,8 @@ while (hrac.func_je_ziva() and nepriatel_goblin.func_je_ziva() and (hrac_chce_bo
     elif operacia == "utek":
         #vyskakujem z while
         hrac_chce_bojovat=0
-        #otestovat neskor ci mozem tu dummy variable nahradit dalsim riadkom? Alebo to uz vyskocim z dvoch while-ov naraz?
+        #otestovat neskor ci mozem tu dummy variable nahradit dalsim riadkom?
+        # Alebo to uz vyskocim z dvoch while-ov naraz?
         #break
     else:
         print("Neznama operacia")
