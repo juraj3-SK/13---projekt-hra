@@ -17,29 +17,37 @@ class hrac(postava):
         self.zlato=zlato
 
     def func_liecenie(self):
-        if(self.mana>=10):
-            self.mana-=10
-            liecenie=4+random.randint(1,6)
-            if (self.zivoty+liecenie>self.max_zivoty):
-                liecenie=self.max_zivoty-self.zivoty
-            self.zivoty+=liecenie
-            print(f"Pridal si si zivoty: {liecenie}. Tvoj pocet zivotov je {self.zivoty}. Mnozstvo many, ktora Ti zostala je: {self.mana}.")
-            print("")
+        if (self.zivoty<self.max_zivoty):
+            if (self.mana>=10):
+                self.mana-=10
+                liecenie=4+random.randint(1,6)
+                if (liecenie>self.max_zivoty-self.zivoty):
+                    liecenie=self.max_zivoty-self.zivoty
+                self.zivoty+=liecenie
+                print(f"Pridal si si zivoty: {liecenie}, Tvoj pocet zivotov je {self.zivoty} a mnozstvo many, ktora Ti zostala je: {self.mana}.")
+                print("")
+            else:
+                print("Nemas dost many na liecenie")
+                print("")
         else:
-            print("Nemas dost many na liecenie")
+            print("Uz mas maximalny pocet zivotov. Nemozes plytvat manou len-tak.")
+            print("")
 
-    def func_pridaj_xp(self, nepriatel):
+    def func_pridaj_odmenu(self, nepriatel):
+        self.zlato+=nepriatel.zlato_odmena
         self.xp+=nepriatel.xp_odmena
         if (self.xp>=20*self.level):
             self.xp-=20*self.level
             self.level+=1
             self.max_zivoty+=10
+            self.zivoty+=10
             self.utok+=2
-            self.mana+=5
+            self.mana+=5    
 
     #ak dam print hraca, tak sa vola toto
     def __str__(self):
         text=""
+        text+=("\n")
         text+=(f"Volas sa {self.nazov}, a.k.a. id={self.id}. Tvoje parametre su:")
         text+=("\n")
         text+=(f"zivoty: {self.zivoty}")
@@ -72,14 +80,17 @@ class hrac(postava):
             text+=(f"\n{self.inventar[0]}")
         else:
             text+=("\nMas so sebou tieto predmety:")
+            counter=0
             for i in self.inventar:
-                text+=(f"\n{i}")
+                counter+=1
+                text+=(f"\n{counter}. {i}")
+        text+=("\n")
         return text
 
     def func_pridaj_predmet(self, predmet):
         self.inventar.append(predmet)
     
     def func_pouzi_predmet(self, idx):
-        #consumables will be removed (when used)
-        if (self.inventar(idx).consumable==1):
-            self.inventar.pop(idx)
+        #ak je predmet konzumovatelny, tak ho po pouziti zmaz zo zonamu predmetov
+        if (self.inventar(idx).konzumovatelny==1):
+            self.inventar.remove(idx)
