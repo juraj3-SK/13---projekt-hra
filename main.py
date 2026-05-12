@@ -13,12 +13,17 @@ from nepriatelia.ork import ork
 nepriatel_ork=ork(4)
 
 from predmet import predmet
-mec=predmet(nazov="mec", typ="zbran", hodnota=10, konzumovatelny=0)
-lektvar=predmet(nazov="jahodovy lektvar", typ="lektvar", hodnota=5, konzumovatelny=1)
-
 vybava=[]
-vybava.append(mec)
-vybava.append(lektvar)
+tempPredmet=predmet(nazov="Mec", typ="zbran", hodnota=10, konzumovatelny=0)
+vybava.append(tempPredmet)
+tempPredmet=predmet(nazov="Maly lektvar", typ="heal", hodnota=2, konzumovatelny=1)
+vybava.append(tempPredmet)
+tempPredmet=predmet(nazov="Velky lektvar", typ="heal", hodnota=50, konzumovatelny=1)
+vybava.append(tempPredmet)
+tempPredmet=predmet(nazov="Mana elixir", typ="mana", hodnota=20, konzumovatelny=1)
+vybava.append(tempPredmet)
+tempPredmet=predmet(nazov="Mana elixir", typ="mana", hodnota=20, konzumovatelny=1)
+vybava.append(tempPredmet)
 
 from hrac import hrac
 #pisat takto s menami premennych
@@ -57,14 +62,15 @@ def func_subojove_kolo(utocnik1, utocnik2):
 
 hrac_chce_bojovat=1
 while (hrac.func_je_ziva() and nepriatel_goblin.func_je_ziva() and (hrac_chce_bojovat==1)):
-    operacia = input("Zadaj operaciu (utok, liecenie, pouzi predmet, vypis, utek): ")
+    operacia = input("Zadaj operaciu (info, utok, liecenie, pouzi predmet, vypis, utek): ")
+    if operacia == "info":
+        print (hrac)
     if operacia == "utok":
         func_subojove_kolo(hrac, nepriatel_goblin)
     elif operacia == "liecenie":
         hrac.func_liecenie()
-    elif operacia == "pouzi predmet":
-        #func_pouzi_predmet(varB)
-        pass
+    elif ((operacia == "pouzi predmet") or (operacia == "pouzi") or (operacia == "predmet")):
+        hrac.func_pouzi_predmet()
     elif operacia == "vypis":
         print(hrac.func_vypis_inventar())
     elif operacia == "utek":
