@@ -5,10 +5,10 @@ import random
 #toto nam hovori, ze class hrac dedi funkcie aj premenne od postavy
 class hrac(postava):
 
-    def __init__(self, id, nazov, max_zivoty, utok, mana, level=1, xp=0, inventar=[], zlato=0):
+    def __init__(self, id, nazov, max_zivoty, utok, iniciativa, mana, level=1, xp=0, inventar=[], zlato=0):
         #toto len ako reminder
         #funkcia super bere (init) od parenta
-        super().__init__(id, nazov, max_zivoty, utok)
+        super().__init__(id, nazov, max_zivoty, utok, iniciativa)
 
         self.mana=mana
         self.level=level
