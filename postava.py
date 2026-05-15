@@ -2,30 +2,20 @@
 import random
 
 class postava:
-    def __init__(self, id, nazov, max_zivoty, utok):
+    def __init__(self, id, nazov, max_zivoty, utok, iniciativa):
         self.id=id
         self.nazov=nazov
         self.max_zivoty=max_zivoty
         self.utok=utok
+        self.iniciativa=iniciativa
 
         self.zivoty=self.max_zivoty
 
     def func_zautoc(self, ciel):
-        #generuj poskodenie
-        poskodenie=self.utok+random.randint(1,6)
-        # Kritický zásah má 10 % šancu a dáva dvojnásobné poškodenie.
-        tempVar=random.randint(1,10)
-        print(f"vygenerovana pravdepodobnost sa rovna: {tempVar}")
-        if (tempVar==1):
-            print("Nasleduje kriticky zasah.")
-            poskodenie=2*poskodenie
-        print(type(self))
-        if (type(self)=="class 'hrac.hrac'"):
-            print(f"Utok hraca {self.nazov}, a.k.a. id={self.id}, je {poskodenie}.")
-        else:
-            print(f"Utok nepriatela {self.nazov}, a.k.a. id={self.id}, je {poskodenie}.")
-
-        ciel.func_zranenie(poskodenie)
+        #mohol by som mat spolocnu funkciu_zautoc a cez #if (isinstance(self, hrac)) zistit,
+        #ci ide o hraca alebo priseru a funkciu napasovat (napr. sila), ale prehladnejsie je
+        #urobit len pass a zdedit len "placeholder" (a napasovat funkciu pre kazde dieta)
+        pass
 
     def func_zranenie(self, damage):
         self.zivoty-=damage
