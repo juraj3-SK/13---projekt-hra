@@ -25,3 +25,12 @@ class nepriatel(postava):
         #vypis info a zautoc
         print(f"Utok nepriatela {self.nazov}, a.k.a. id={self.id}, je {poskodenie}.")
         ciel.func_zranenie(poskodenie)
+
+    def func_zranenie(self, damage):
+        self.zivoty-=damage
+        if (self.zivoty<0):
+            self.zivoty=0
+        if (self.func_je_ziva()):
+            print(f"Nepriatel {self.nazov}, a.k.a. id={self.id}, bol zasiahnuty, zostava mu pocet zivotov: {self.zivoty}")
+        else:
+            print(f"Nepriatel {self.nazov}, a.k.a. id={self.id}, bol zabity.")

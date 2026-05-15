@@ -33,6 +33,15 @@ class hrac(postava):
         print(f"Utok hraca {self.nazov}, a.k.a. id={self.id}, je {poskodenie}.")
         ciel.func_zranenie(poskodenie)
 
+    def func_zranenie(self, damage):
+        self.zivoty-=damage
+        if (self.zivoty<0):
+            self.zivoty=0
+        if (self.func_je_ziva()):
+            print(f"Hrac {self.nazov}, a.k.a. id={self.id}, bol zasiahnuty, zostava mu pocet zivotov: {self.zivoty}")
+        else:
+            print(f"Hrac {self.nazov}, a.k.a. id={self.id}, bol zabity.")
+
     def func_liecenie(self):
         if (self.zivoty<self.max_zivoty):
             if (self.mana>=10):
