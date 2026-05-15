@@ -1,7 +1,6 @@
 from postava import postava
 import random
 
-
 #toto nam hovori, ze class hrac dedi funkcie aj premenne od postavy
 class hrac(postava):
 
@@ -15,6 +14,24 @@ class hrac(postava):
         self.xp=xp
         self.inventar=inventar
         self.zlato=zlato
+
+    def func_zautoc(self, ciel):
+        #ak by som potreboval volat funkciu rodica, tak to dam sem
+        #super().func_zautoc(ciel)
+        
+        #generuj poskodenie
+        poskodenie=self.utok+random.randint(1,6)
+
+        # Kritický zásah má 10 % šancu a dáva dvojnásobné poškodenie.
+        tempVar=random.randint(1,10)
+        print(f"vygenerovana pravdepodobnost sa rovna: {tempVar}")
+        if (tempVar==1):
+            print("Nasleduje kriticky zasah.")
+            poskodenie=2*poskodenie
+
+        #vypis info a zautoc
+        print(f"Utok hraca {self.nazov}, a.k.a. id={self.id}, je {poskodenie}.")
+        ciel.func_zranenie(poskodenie)
 
     def func_liecenie(self):
         if (self.zivoty<self.max_zivoty):
