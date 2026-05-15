@@ -70,6 +70,7 @@ class hrac(postava):
         text+=(f"zivoty: {self.zivoty}")
         text+=(f"\nmax. zivoty: {self.max_zivoty}")
         text+=(f"\nutok: {self.utok}")
+        text+=(f"\niniciativa: {self.iniciativa}")
         text+=(f"\nmana: {self.mana}")
         text+=(f"\nlevel: {self.level}")
         text+=(f"\nxp: {self.xp}")
