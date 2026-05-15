@@ -59,7 +59,7 @@ class hrac(postava):
             self.max_zivoty+=10
             self.zivoty+=10
             self.utok+=2
-            self.mana+=5    
+            self.mana+=5
 
     #ak dam print hraca, tak sa vola toto
     def __str__(self):
