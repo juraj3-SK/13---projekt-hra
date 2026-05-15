@@ -31,15 +31,21 @@ class postava:
         return(self.zivoty>0)
     
     #getters
-    #vrat autora
+    #vrat nazov
     def get_nazov(self):
         return(self.nazov)
-    #vrat nazov
+    #vrat zivoty
     def get_zivoty(self):
         return(self.zivoty)
-    #vrat rok
+    #vrat max_zivoty
+    def get_zivoty(self):
+        return(self.max_zivoty)
+    #vrat utok
     def get_utok(self):
         return(self.utok)
-        #vrat id
+    #vrat iniciativu
+    def get_iniciativa(self):
+        return(self.iniciativa)
+    #vrat id
     def get_id(self):
         return(self.id)
