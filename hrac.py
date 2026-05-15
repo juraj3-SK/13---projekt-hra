@@ -76,16 +76,6 @@ class hrac(postava):
         text+=(f"\nxp: {self.xp}")
         text+=(f"\nzlato: {self.zlato}")
         text+=("\n")
-        
-        # if (len(self.inventar)==0):
-        #     text+=("\nNemas so sebou ziadne predmety.")
-        # elif(len(self.inventar)==1):
-        #     text+=("\nMas so sebou tento predmet:")
-        #     text+=(f"\n{self.inventar[0]}")
-        # else:
-        #     text+=("\nMas so sebou tieto predmety:")
-        #     for i in self.inventar:
-        #         text+=(f"\n{i}")
         text+=self.func_vypis_inventar()
         return text
 
@@ -108,50 +98,41 @@ class hrac(postava):
     def func_pridaj_predmet(self, predmet):
         self.inventar.append(predmet)
     
-    def func_pouzi_predmet(self):
-        #riadky cca 94-107 do mainu a volat funkciu pouzi predmet uz len s konkretnym indexom
-        if (len(self.inventar)==0):
-            print("Nemas so sebou ziadne predmety.")
+    def func_pouzi_predmet(self, idx):
+        #kontrola ci user neskusa voloviny
+        if ((idx<1) or (idx>(len(self.inventar)))):
+            print ("Taky predmet neexistuje. Daj sa vypchat!")
         else:
-            tempText=self.func_vypis_inventar()
-            print(tempText)
-            
-            print("")
-            idx = int(input("Napis cislo predmetu, ktory chces pouzit): "))
-            print("")
-            #kontrola ci user neskusa voloviny
-            if ((idx<1) or (idx>(len(self.inventar)))):
-                print ("Taky predmet neexistuje. Daj sa vypchat!")
-            else:
-                #ak je predmet konzumovatelny, tak ho po pouziti zmaz zo zoznamu predmetov
-                if (self.inventar[idx-1].konzumovatelny==1):
-                    print(f"Pouzil si predmet cislo {idx}")
-                    print(self.inventar[idx-1])
+            #ak je predmet konzumovatelny, tak ho najprv pouzi a potom zmaz zo zoznamu
+            if (self.inventar[idx-1].konzumovatelny==1):
+                print(f"Pouzil si predmet cislo {idx}")
+                print(self.inventar[idx-1])
 
-                    #ak je elixir typu mana, tak ju prida, many moze byt neobmedzene
-                    if (self.inventar[idx-1].typ=="mana"):
-                        self.mana+=self.inventar[idx-1].hodnota
-                        print (f"Mnozstvo many, ktore Ti elixir pridal je: {self.inventar[idx-1].hodnota}. Mnozstvo many, ktoru mas: {self.mana}")
+                #ak je elixir typu mana, tak ju prida, many moze byt neobmedzene
+                if (self.inventar[idx-1].typ=="mana"):
+                    self.mana+=self.inventar[idx-1].hodnota
+                    print (f"Mnozstvo many, ktore Ti elixir pridal je: {self.inventar[idx-1].hodnota}. Mnozstvo many, ktoru mas: {self.mana}")
                     
-                    #ak je elixir typu heal, tak vylieci zivoty do max. poctu zivotov
-                    #aj ak je pocet zivtov rovny max. poctu, aj tak elixir vypije a nic neprida
-                    elif (self.inventar[idx-1].typ=="heal"):
-                        pocet_chybajucich_zivotov=self.max_zivoty-self.zivoty
-                        if (pocet_chybajucich_zivotov==0):
-                            print (f"Elixir Ti len uhasil smad. Pocet zivotov, ktore mas je: {self.zivoty}.")
-                        else:
-                            #ak lektvar lieci viac zivotov, ako je pocet chybajucich zivotov, tak nastav liecenie len na tento rozdiel
-                            if (self.inventar[idx-1].hodnota>pocet_chybajucich_zivotov):
-                                pocet_liecenych_zivotov=pocet_chybajucich_zivotov
-                            else:
-                                #inak vyuzi plnu liecivu silu lektvaru
-                                pocet_liecenych_zivotov=self.inventar[idx-1].hodnota
-                            self.zivoty+=pocet_liecenych_zivotov
-                            print (f"Pocet zivotov, ktore Ti elixir vyliecil je: {pocet_liecenych_zivotov}. Pocet zivotov, ktore mas: {self.zivoty}")
+                #ak je elixir typu heal, tak vylieci zivoty do max. poctu zivotov
+                #aj ak je pocet zivtov rovny max. poctu, aj tak elixir vypije a nic neprida
+                elif (self.inventar[idx-1].typ=="heal"):
+                    pocet_chybajucich_zivotov=self.max_zivoty-self.zivoty
+                    if (pocet_chybajucich_zivotov==0):
+                        print (f"Elixir Ti len uhasil smad. Pocet zivotov, ktore mas je: {self.zivoty}.")
                     else:
-                        print("Vypil si neznamy druh elixiru. Velmi dobre Ti uhasil smad.")
-                    
-                    self.inventar.pop(idx-1)
+                        #ak lektvar lieci viac zivotov, ako je pocet chybajucich zivotov, tak nastav liecenie len na tento rozdiel
+                        if (self.inventar[idx-1].hodnota>pocet_chybajucich_zivotov):
+                            pocet_liecenych_zivotov=pocet_chybajucich_zivotov
+                        else:
+                            #inak vyuzi plnu liecivu silu lektvaru
+                            pocet_liecenych_zivotov=self.inventar[idx-1].hodnota
+                        self.zivoty+=pocet_liecenych_zivotov
+                        print (f"Pocet zivotov, ktore Ti elixir vyliecil je: {pocet_liecenych_zivotov}. Pocet zivotov, ktore mas: {self.zivoty}")
                 else:
-                    print(f"Pouzil si predmet cislo {idx}")
-                    print(self.inventar[idx-1])
+                    print("Vypil si neznamy druh elixiru. Velmi dobre Ti uhasil smad.")
+
+                #este vymaz konzumovatelny predmet zo zoznamu    
+                self.inventar.pop(idx-1)
+            else:
+                print(f"Pouzil si predmet cislo {idx}")
+                print(self.inventar[idx-1])
