@@ -13,21 +13,40 @@ from nepriatelia.ork import ork
 nepriatel_ork=ork(4)
 
 from predmet import predmet
+
+#zadefinuj slovnik
+#key bude nazov, value bude predmet
+zoznam_predmetov = {
+  "maly_lektvar": predmet(nazov="Maly lektvar", typ="heal", hodnota=2, konzumovatelny=1),
+  "velky_lektvar": predmet(nazov="Velky lektvar", typ="heal", hodnota=50, konzumovatelny=1),
+  "mana_elixir": predmet(nazov="Mana elixir", typ="mana", hodnota=20, konzumovatelny=1),
+  "mec": predmet(nazov="Mec", typ="zbran", hodnota=10, konzumovatelny=0)
+}
+
+#stara inicializacia vybavy
+#ked sa otestuje nova, ktora ybera zo slovnika predmetov, tak to mozem zmazat
+# vybava=[]
+# tempPredmet=predmet(nazov="Mec", typ="zbran", hodnota=10, konzumovatelny=0)
+# vybava.append(tempPredmet)
+# tempPredmet=predmet(nazov="Maly lektvar", typ="heal", hodnota=2, konzumovatelny=1)
+# vybava.append(tempPredmet)
+# tempPredmet=predmet(nazov="Velky lektvar", typ="heal", hodnota=50, konzumovatelny=1)
+# vybava.append(tempPredmet)
+# tempPredmet=predmet(nazov="Mana elixir", typ="mana", hodnota=20, konzumovatelny=1)
+# vybava.append(tempPredmet)
+# tempPredmet=predmet(nazov="Mana elixir", typ="mana", hodnota=20, konzumovatelny=1)
+# vybava.append(tempPredmet)
+
 vybava=[]
-tempPredmet=predmet(nazov="Mec", typ="zbran", hodnota=10, konzumovatelny=0)
-vybava.append(tempPredmet)
-tempPredmet=predmet(nazov="Maly lektvar", typ="heal", hodnota=2, konzumovatelny=1)
-vybava.append(tempPredmet)
-tempPredmet=predmet(nazov="Velky lektvar", typ="heal", hodnota=50, konzumovatelny=1)
-vybava.append(tempPredmet)
-tempPredmet=predmet(nazov="Mana elixir", typ="mana", hodnota=20, konzumovatelny=1)
-vybava.append(tempPredmet)
-tempPredmet=predmet(nazov="Mana elixir", typ="mana", hodnota=20, konzumovatelny=1)
-vybava.append(tempPredmet)
+vybava.append(zoznam_predmetov.get("mec"))
+vybava.append(zoznam_predmetov.get("maly_lektvar"))
+vybava.append(zoznam_predmetov.get("velky_lektvar"))
+vybava.append(zoznam_predmetov.get("mana_elixir"))
+vybava.append(zoznam_predmetov.get("mana_elixir"))
 
 from hrac import hrac
 #pisat takto s menami premennych
-hrac=hrac(id=5, nazov="hrac_jozko", max_zivoty=10, utok=10, mana=30, level=1, xp=10, inventar=vybava, zlato=10)
+hrac=hrac(id=5, nazov="hrac_jozko", max_zivoty=10, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybava, zlato=10)
 #nie takto:
 #hrac=hrac(5, "hrac_jozko", 10, 10, 30, 1, 10, "mec", 10)
 
@@ -54,7 +73,6 @@ def func_subojove_kolo(utocnik1, utocnik2):
         else:
             print ("Podarilo sa Ti zabit nepriatela, dostanes odmenu.")
             utocnik1.func_pridaj_odmenu(utocnik2)
-            #TODO: tu vygenerujem nahodny predmet
     #ak je utocnik2 zivy, tak utoci
     else:
         utocnik2.func_zautoc(utocnik1)
@@ -67,7 +85,6 @@ def func_subojove_kolo(utocnik1, utocnik2):
             if (type(utocnik1)=="class 'nepriatelia.goblin.goblin'"):
                 print ("Podarilo sa Ti zabit nepriatela, dostanes odmenu.")
                 utocnik2.func_pridaj_odmenu(utocnik1)
-                #TODO: tu vygenerujem nahodny predmet
 
 hrac_chce_bojovat=1
 while (hrac.func_je_ziva() and nepriatel_goblin.func_je_ziva() and (hrac_chce_bojovat==1)):
@@ -80,7 +97,16 @@ while (hrac.func_je_ziva() and nepriatel_goblin.func_je_ziva() and (hrac_chce_bo
         hrac.func_liecenie()
         #SEM DOPLNIT UTOK PRISERY, LEBO nepriatel necaka!
     elif ((operacia == "pouzi predmet") or (operacia == "pouzi") or (operacia == "predmet")):
-        hrac.func_pouzi_predmet()
+        #presunute z hraca - velmi sa mi to tu nepaci, ale OK
+        if (len(hrac.inventar)==0):
+            print("Nemas so sebou ziadne predmety.")
+        else:
+            tempText=hrac.func_vypis_inventar()
+            print(tempText)
+            print("")
+            idx = int(input("Napis cislo predmetu, ktory chces pouzit): "))
+            print("")
+            hrac.func_pouzi_predmet(idx)
     elif operacia == "vypis":
         print(hrac.func_vypis_inventar())
     elif operacia == "utek":
