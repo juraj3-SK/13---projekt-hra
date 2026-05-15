@@ -34,6 +34,14 @@ hrac=hrac(id=5, nazov="hrac_jozko", max_zivoty=10, utok=10, mana=30, level=1, xp
 print (hrac)
 
 def func_subojove_kolo(utocnik1, utocnik2):
+    #zadefinujem utocnika1 ako hraca
+    #zadefinujem napevno utocnika2 ako priseru
+    #doplnit obom postavam dve premenne (premenna postavy!!!) iniciativa1/2 a poradie sa urci podla vyssej iniciativy + nejaky random
+    #doplnit + prerobit (OBOJE!!!) funkcie func_zranenie tak:
+    #prerobit func_zranenie tak, aby hracova fcia zranenie pri zabiti vypisala koniec
+    #a funkcia pre priseru vracia 0/1, ak nebola zabita, tak nic a ak bola zabita, tak si hned v dalsom riadku volam funkciu "daj odmenu"
+    #pri zabiti prisery dala utocnikovi odmenu (ak utocnikom je hrac)
+    
     #zacina utocnik1
     utocnik1.func_zautoc(utocnik2)
     #ak je utocnik 2 mrtvy
@@ -41,6 +49,7 @@ def func_subojove_kolo(utocnik1, utocnik2):
         #tak idem skontrolovat, ci utocnik2 je hrac
         #ak ano, tak koncim hru, inak davam odmenu
         if (type(utocnik2)=="class 'hrac.hrac'"):
+            #if (isinstance(utocnik2,hrac))
             print("Prisiel si o vsetky zivoty")
         else:
             print ("Podarilo sa Ti zabit nepriatela, dostanes odmenu.")
@@ -65,10 +74,11 @@ while (hrac.func_je_ziva() and nepriatel_goblin.func_je_ziva() and (hrac_chce_bo
     operacia = input("Zadaj operaciu (info, utok, liecenie, pouzi predmet, vypis, utek): ")
     if operacia == "info":
         print (hrac)
-    if operacia == "utok":
+    elif operacia == "utok":
         func_subojove_kolo(hrac, nepriatel_goblin)
     elif operacia == "liecenie":
         hrac.func_liecenie()
+        #SEM DOPLNIT UTOK PRISERY, LEBO nepriatel necaka!
     elif ((operacia == "pouzi predmet") or (operacia == "pouzi") or (operacia == "predmet")):
         hrac.func_pouzi_predmet()
     elif operacia == "vypis":
@@ -76,9 +86,6 @@ while (hrac.func_je_ziva() and nepriatel_goblin.func_je_ziva() and (hrac_chce_bo
     elif operacia == "utek":
         #vyskakujem z while
         hrac_chce_bojovat=0
-        #otestovat neskor ci mozem tu dummy variable nahradit dalsim riadkom?
-        # Alebo to uz vyskocim z dvoch while-ov naraz?
-        #break
     else:
         print("Neznama operacia")
 

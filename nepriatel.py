@@ -3,8 +3,8 @@ from postava import postava
 import random
 
 class nepriatel(postava):
-    def __init__(self, id, nazov, zivoty, utok, zlato_odmena, xp_odmena):
-        super().__init__(id, nazov, zivoty, utok)
+    def __init__(self, id, nazov, max_zivoty, utok, iniciativa, zlato_odmena, xp_odmena):
+        super().__init__(id, nazov, max_zivoty, utok, iniciativa)
         self.zlato_odmena=zlato_odmena
         self.xp_odmena=xp_odmena
 
