@@ -52,6 +52,22 @@ hrac=hrac(id=5, nazov="hrac_jozko", max_zivoty=10, utok=10, iniciativa=10, mana=
 
 print (hrac)
 
+def func_vygeneruj_predmet_odmenu(self):
+    #pravdepodobnost 20% na kazdy z lektvarov; pravdepodobnost 40% ze nedostane nic
+    tempVar=random.randint(1,5)
+    if (tempVar==1):
+        print("Dostavas extra odmenu: maly lektvar.")
+        hrac.func_pridaj_predmet(zoznam_predmetov.get("maly_lektvar"))
+    elif (tempVar==2):
+        print("Dostavas extra odmenu: velky lektvar.")
+        hrac.func_pridaj_predmet(zoznam_predmetov.get("velky_lektvar"))
+    elif (tempVar==3):
+        print("Dostavas extra odmenu: mana elixir.")
+        hrac.func_pridaj_predmet(zoznam_predmetov.get("mana_elixir"))
+    else:
+        print("Extra odmenu neziskavas.")
+
+
 def func_subojove_kolo(utocnik1, utocnik2):
     #zadefinujem utocnika1 ako hraca
     #zadefinujem napevno utocnika2 ako priseru
@@ -84,7 +100,7 @@ def func_subojove_kolo(utocnik1, utocnik2):
             #else:
             if (type(utocnik1)=="class 'nepriatelia.goblin.goblin'"):
                 print ("Podarilo sa Ti zabit nepriatela, dostanes odmenu.")
-                utocnik2.func_pridaj_odmenu(utocnik1)
+                utocnik2.func_pridaj_odmenu(utocnik1, zoznam_predmetov)
 
 hrac_chce_bojovat=1
 while (hrac.func_je_ziva() and nepriatel_goblin.func_je_ziva() and (hrac_chce_bojovat==1)):
