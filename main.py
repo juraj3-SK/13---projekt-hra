@@ -104,6 +104,7 @@ def func_subojove_kolo(nepriatel):
     #pri zabiti prisery dala utocnikovi odmenu (ak utocnikom je hrac)
     
 hrac_chce_bojovat=1
+
 while (hrac.func_je_ziva() and nepriatel_goblin.func_je_ziva() and (hrac_chce_bojovat==1)):
     operacia = input("Zadaj operaciu (info, utok, liecenie, pouzi predmet, vypis, utek): ")
     if operacia == "info":
@@ -112,7 +113,21 @@ while (hrac.func_je_ziva() and nepriatel_goblin.func_je_ziva() and (hrac_chce_bo
         func_subojove_kolo(nepriatel_goblin)
     elif operacia == "liecenie":
         hrac.func_liecenie()
-        #SEM DOPLNIT UTOK PRISERY, LEBO nepriatel necaka!
+       
+        #tieto rozsiahle if-y su len na testovanie
+        #mozeme ich zmazat a nechat len ten jeden, ked nepriatel utoci a aj zasiahne
+        #nepriatel necaka a skusi zautocit, davam 50%, ze to stihne
+        tempVar=random.randint(1,2)
+        if (tempVar==1):
+            print("Kym sa liecis, nepriatel necaka. Prichadza utok!")
+            nepriatel_goblin.func_zautoc(hrac)
+            if (hrac.func_je_ziva):
+                print ("Prezil si.")
+            else:
+                print ("Nepriatel Ta fatalne zasiahol!")
+        else:
+            print ("Nepriatel zakopol o prazdnu flasticku od lektvaru a nestihol zautocit.")
+
     elif ((operacia == "pouzi predmet") or (operacia == "pouzi") or (operacia == "predmet")):
         #presunute z hraca - velmi sa mi to tu nepaci, ale OK
         if (len(hrac.inventar)==0):
@@ -124,11 +139,36 @@ while (hrac.func_je_ziva() and nepriatel_goblin.func_je_ziva() and (hrac_chce_bo
             idx = int(input("Napis cislo predmetu, ktory chces pouzit): "))
             print("")
             hrac.func_pouzi_predmet(idx)
+
+            #tieto rozsiahle if-y su len na testovanie
+            #mozeme ich zmazat a nechat len ten jeden, ked nepriatel utoci a aj zasiahne
+            #nepriatel necaka a skusi zautocit, davam 50%, ze to stihne
+            tempVar=random.randint(1,2)
+            if (tempVar==1):
+                print("Kym sa babres s vybavou, nepriatel necaka. Prichadza utok!")
+                nepriatel_goblin.func_zautoc(hrac)
+                if (hrac.func_je_ziva()):
+                    print ("Nastastie si prezil.")
+                else:
+                    print ("Kym si hladal vybavu, nepriatel Ta fatalne zasiahol!")
+            else:
+                print ("Nepriatel sa posmykol na supke z jablka a nestihol zautocit.")
+
     elif operacia == "vypis":
         print(hrac.func_vypis_inventar())
     elif operacia == "utek":
-        #vyskakujem z while
         hrac_chce_bojovat=0
+        print("Snazis sa nepriatelovi utiect. Mozno na Teba vsak este stihne zautocit...")
+        #ale pred vyskocenim z while este davam 50% sancu nepriatelovi na utok
+        tempVar=random.randint(1,2)
+        if (tempVar==1):
+            nepriatel_goblin.func_zautoc(hrac)
+            if (hrac.func_je_ziva()):
+                print ("Nepriatel na Teba zautocil, ale podarilo sa Ti utiect.")
+            else:
+                print ("Nepodarilo sa Ti utiect. Nepriatel Ta stihol este zasiahnut pri uteku.")
+        else:
+            print ("Nepriatel sa posmykol a nestihol zautocit. Podarilo sa Ti utiect.")
     else:
         print("Neznama operacia")
 
