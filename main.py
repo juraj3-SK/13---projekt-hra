@@ -24,7 +24,7 @@ zoznam_predmetov = {
 }
 
 #stara inicializacia vybavy
-#ked sa otestuje nova, ktora ybera zo slovnika predmetov, tak to mozem zmazat
+#ked sa otestuje nova, ktora vybera zo slovnika predmetov, tak to mozem zmazat
 # vybava=[]
 # tempPredmet=predmet(nazov="Mec", typ="zbran", hodnota=10, konzumovatelny=0)
 # vybava.append(tempPredmet)
@@ -46,29 +46,55 @@ vybava.append(zoznam_predmetov.get("mana_elixir"))
 
 from hrac import hrac
 #pisat takto s menami premennych
-hrac=hrac(id=5, nazov="hrac_jozko", max_zivoty=10, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybava, zlato=10)
+hrac=hrac(id=5, nazov="hrac_jozko", max_zivoty=20, utok=10, iniciativa=1, mana=30, level=1, xp=10, inventar=vybava, zlato=10)
 #nie takto:
 #hrac=hrac(5, "hrac_jozko", 10, 10, 30, 1, 10, "mec", 10)
 
 print (hrac)
 
-def func_vygeneruj_predmet_odmenu(self):
+#nie som si isty, ci to ma byt tu
+#viac by sa mi to pacilo v hracovi, ale tam nemam slovnik, musel by som ho tam poslat ako parameter funkcie
+#necham si poradit, kam to dat
+def func_vygeneruj_predmet_odmenu(obdarovany):
     #pravdepodobnost 20% na kazdy z lektvarov; pravdepodobnost 40% ze nedostane nic
     tempVar=random.randint(1,5)
     if (tempVar==1):
         print("Dostavas extra odmenu: maly lektvar.")
-        hrac.func_pridaj_predmet(zoznam_predmetov.get("maly_lektvar"))
+        obdarovany.func_pridaj_predmet(zoznam_predmetov.get("maly_lektvar"))
     elif (tempVar==2):
         print("Dostavas extra odmenu: velky lektvar.")
-        hrac.func_pridaj_predmet(zoznam_predmetov.get("velky_lektvar"))
+        obdarovany.func_pridaj_predmet(zoznam_predmetov.get("velky_lektvar"))
     elif (tempVar==3):
         print("Dostavas extra odmenu: mana elixir.")
-        hrac.func_pridaj_predmet(zoznam_predmetov.get("mana_elixir"))
+        obdarovany.func_pridaj_predmet(zoznam_predmetov.get("mana_elixir"))
     else:
         print("Extra odmenu neziskavas.")
 
 
-def func_subojove_kolo(utocnik1, utocnik2):
+def func_subojove_kolo(nepriatel):
+    #poradie utoku sa urci podla vyssej premennej iniciativa (plus hod kockou)
+    tempVar=hrac.iniciativa+random.randint(1,6)-nepriatel.iniciativa-random.randint(1,6)
+    #ak iniciativa hraca je vyssia, tak zacina
+    if (tempVar>=0):
+        #hrac utoci, ak nepriatel prezil, tak utoci spat. Ak nie, tak hrac dostava odmenu a mozno aj predmet
+        hrac.func_zautoc(nepriatel)
+        if (nepriatel.func_je_ziva()):
+            nepriatel.func_zautoc(hrac)
+        else:
+            hrac.func_pridaj_odmenu(nepriatel)
+            func_vygeneruj_predmet_odmenu(hrac)    
+    else:
+    #ak ma iniciativu vyssiu nepriatel, tak zacina nepriatel.
+        nepriatel.func_zautoc(hrac)
+        #Hrac utoci len ak prezil.
+        if hrac.func_je_ziva():
+            hrac.func_zautoc(nepriatel)
+            #Ak zabil nepriatela, dostane odmenu.
+            if (not nepriatel.func_je_ziva()):
+                hrac.func_pridaj_odmenu(nepriatel)
+                func_vygeneruj_predmet_odmenu(hrac)
+
+    #TENTO POSTUP BOL DOHODNUTY NA ONLINE HODINE
     #zadefinujem utocnika1 ako hraca
     #zadefinujem napevno utocnika2 ako priseru
     #doplnit obom postavam dve premenne (premenna postavy!!!) iniciativa1/2 a poradie sa urci podla vyssej iniciativy + nejaky random
@@ -77,38 +103,13 @@ def func_subojove_kolo(utocnik1, utocnik2):
     #a funkcia pre priseru vracia 0/1, ak nebola zabita, tak nic a ak bola zabita, tak si hned v dalsom riadku volam funkciu "daj odmenu"
     #pri zabiti prisery dala utocnikovi odmenu (ak utocnikom je hrac)
     
-    #zacina utocnik1
-    utocnik1.func_zautoc(utocnik2)
-    #ak je utocnik 2 mrtvy
-    if (not utocnik2.func_je_ziva()):
-        #tak idem skontrolovat, ci utocnik2 je hrac
-        #ak ano, tak koncim hru, inak davam odmenu
-        if (type(utocnik2)=="class 'hrac.hrac'"):
-            #if (isinstance(utocnik2,hrac))
-            print("Prisiel si o vsetky zivoty")
-        else:
-            print ("Podarilo sa Ti zabit nepriatela, dostanes odmenu.")
-            utocnik1.func_pridaj_odmenu(utocnik2)
-    #ak je utocnik2 zivy, tak utoci
-    else:
-        utocnik2.func_zautoc(utocnik1)
-        if (not utocnik1.func_je_ziva()):
-            #tak idem skontrolovat, ci utocnik1 je hrac
-            #ak ano, tak koncim hru, inak davam odmenu
-            if (type(utocnik1)=="class 'hrac.hrac'"):
-                print("Prisiel si o vsetky zivoty")
-            #else:
-            if (type(utocnik1)=="class 'nepriatelia.goblin.goblin'"):
-                print ("Podarilo sa Ti zabit nepriatela, dostanes odmenu.")
-                utocnik2.func_pridaj_odmenu(utocnik1, zoznam_predmetov)
-
 hrac_chce_bojovat=1
 while (hrac.func_je_ziva() and nepriatel_goblin.func_je_ziva() and (hrac_chce_bojovat==1)):
     operacia = input("Zadaj operaciu (info, utok, liecenie, pouzi predmet, vypis, utek): ")
     if operacia == "info":
         print (hrac)
     elif operacia == "utok":
-        func_subojove_kolo(hrac, nepriatel_goblin)
+        func_subojove_kolo(nepriatel_goblin)
     elif operacia == "liecenie":
         hrac.func_liecenie()
         #SEM DOPLNIT UTOK PRISERY, LEBO nepriatel necaka!
@@ -131,36 +132,7 @@ while (hrac.func_je_ziva() and nepriatel_goblin.func_je_ziva() and (hrac_chce_bo
     else:
         print("Neznama operacia")
 
-
-# Pravidlá:
-# ● Hráč útočí za:
-# ● Ak hráč vyhrá:
-# ○ môže dostať predmet,
-# ● Ak prehrá:
-# ○ hra vypíše koniec,
-# ○ hráč sa už nemôže ďalej hrať, alebo sa načíta posledný save.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    print (hrac)
 
 # #def zaciatokHry():
 #     #while (mojHrac.func_je_ziva()):
