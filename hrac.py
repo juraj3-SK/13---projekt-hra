@@ -59,8 +59,6 @@ class hrac(postava):
             print("Uz mas maximalny pocet zivotov. Nemozes plytvat manou len-tak.")
             print("")
 
-    #novy riadok na commitnutie
-
     def func_pridaj_odmenu(self, nepriatel):
         self.zlato+=nepriatel.zlato_odmena
         self.xp+=nepriatel.xp_odmena
