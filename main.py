@@ -97,7 +97,7 @@ def func_subojove_kolo(nepriatel):
     #a funkcia pre priseru vracia 0/1, ak nebola zabita, tak nic a ak bola zabita, tak si hned v dalsom riadku volam funkciu "daj odmenu"
     #pri zabiti prisery dala utocnikovi odmenu (ak utocnikom je hrac)
 
-
+    #novy riadok na commitnutie
 
 def func_spustena_hra(hrac):
     operacia = input("Zadaj operaciu (1 - bojovat, 2 - liecenie za manu, 3 - inventar, 4 - pouzi predmet, 5 - obchod, 6 - stav hraca, 7 - ulozit hru, 0 - koniec): ")
