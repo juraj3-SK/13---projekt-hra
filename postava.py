@@ -33,7 +33,7 @@ class postava:
     def get_zivoty(self):
         return(self.zivoty)
     #vrat max_zivoty
-    def get_zivoty(self):
+    def get_max_zivoty(self):
         return(self.max_zivoty)
     #vrat utok
     def get_utok(self):

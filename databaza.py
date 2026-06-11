@@ -3,6 +3,7 @@ import sqlite3
 class db_hry:
 
     def __init__(self):
+        #tento connect vytvori databazu bez tabulky (ak este neexistuje)
         self.conn=sqlite3.connect("db_hry.db")
         self.cursor=self.conn.cursor()
 
@@ -11,7 +12,7 @@ class db_hry:
         #tabulka inventar
     
         self.cursor.execute("""
-        CREATE TABLE hraci (
+        CREATE TABLE IF NOT EXISTS hraci (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nazov TEXT UNIQUE NOT NULL,
             max_zivoty INTEGER NOT NULL,
@@ -24,7 +25,7 @@ class db_hry:
             zlato INTEGER NOT NULL
         );
 
-        CREATE TABLE inventar (
+        CREATE TABLE IF NOT EXISTS inventar (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             hrac_id INTEGER NOT NULL,
             nazov_predmetu TEXT NOT NULL,
@@ -34,8 +35,7 @@ class db_hry:
         );
         """)
         self.conn.commit()
-        self.conn.close()
-
+   
     def uloz_hraca(self, hrac):
         #tabulka hraci
         #tabulka inventar
@@ -44,4 +44,6 @@ class db_hry:
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,(hrac.id, hrac.nazov, hrac.max_zivoty, hrac.zivoty, hrac.utok, hrac.iniciativa, hrac.mana, hrac.level, hrac.xp, hrac.zlato))
         self.conn.commit()
+    
+    def func_zavri_db(self):
         self.conn.close()

@@ -65,7 +65,7 @@ def func_vygeneruj_predmet_odmenu(obdarovany):
         print("Extra odmenu neziskavas.")
 
 
-def func_subojove_kolo(nepriatel):
+def func_subojove_kolo(hrac, nepriatel):
     #poradie utoku sa urci podla vyssej premennej iniciativa (plus hod kockou)
     tempVar=hrac.iniciativa+random.randint(1,6)-nepriatel.iniciativa-random.randint(1,6)
     #ak iniciativa hraca je vyssia, tak zacina
@@ -106,7 +106,7 @@ def func_spustena_hra(hrac):
         if operacia == "info":
             print (hrac)
         elif operacia == "utok":
-            func_subojove_kolo(nepriatel_goblin)
+            func_subojove_kolo(hrac, nepriatel_goblin)
         elif operacia == "liecenie":
             hrac.func_liecenie()
             
@@ -117,7 +117,7 @@ def func_spustena_hra(hrac):
             if (tempVar==1):
                 print("Kym sa liecis, nepriatel necaka. Prichadza utok!")
                 nepriatel_goblin.func_zautoc(hrac)
-                if (hrac.func_je_ziva):
+                if (hrac.func_je_ziva()):
                     print ("Prezil si.")
                 else:
                     print ("Nepriatel Ta fatalne zasiahol!")
@@ -143,7 +143,7 @@ def func_spustena_hra(hrac):
                 if (tempVar==1):
                     print("Kym sa babres s vybavou, nepriatel necaka. Prichadza utok!")
                     nepriatel_goblin.func_zautoc(hrac)
-                    if (hrac.func_je_ziva):
+                    if (hrac.func_je_ziva()):
                         print ("Nastastie si prezil.")
                     else:
                         print ("Kym si hladal vybavu, nepriatel Ta fatalne zasiahol!")
@@ -159,7 +159,7 @@ def func_spustena_hra(hrac):
             tempVar=random.randint(1,2)
             if (tempVar==1):
                 nepriatel_goblin.func_zautoc(hrac)
-                if (hrac.func_je_ziva):
+                if (hrac.func_je_ziva()):
                     print ("Nepriatel na Teba zautocil, ale podarilo sa Ti utiect.")
                 else:
                     print ("Nepodarilo sa Ti utiect. Nepriatel Ta stihol este zasiahnut pri uteku.")
