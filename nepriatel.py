@@ -17,12 +17,15 @@ class nepriatel(postava):
 
         # Kritický zásah má 10 % šancu a dáva dvojnásobné poškodenie.
         tempVar=random.randint(1,10)
+        print("")
         print(f"vygenerovana pravdepodobnost sa rovna: {tempVar}")
         if (tempVar==1):
+            print("")
             print("Nasleduje kriticky zasah.")
             poskodenie=2*poskodenie
 
         #vypis info a zautoc
+        print("")
         print(f"Utok nepriatela {self.nazov}, a.k.a. id={self.id}, je {poskodenie}.")
         ciel.func_zranenie(poskodenie)
 
@@ -31,6 +34,8 @@ class nepriatel(postava):
         if (self.zivoty<0):
             self.zivoty=0
         if (self.func_je_ziva()):
+            print("")
             print(f"Nepriatel {self.nazov}, a.k.a. id={self.id}, bol zasiahnuty, zostava mu pocet zivotov: {self.zivoty}")
         else:
+            print("")
             print(f"Nepriatel {self.nazov}, a.k.a. id={self.id}, bol zabity.")
