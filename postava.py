@@ -11,6 +11,9 @@ class postava:
 
         self.zivoty=self.max_zivoty
 
+    #def __del__(self):
+    #    print (f"Postava {self.nazov} bola zmazana")
+
     def func_zautoc(self, ciel):
         #mohol by som mat spolocnu funkciu_zautoc a cez #if (isinstance(self, hrac)) zistit,
         #ci ide o hraca alebo priseru a funkciu napasovat (napr. sila), ale prehladnejsie je
