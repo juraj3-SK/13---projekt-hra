@@ -21,8 +21,9 @@ class predmet:
     #vrat typ
     def get_typ(self):
         return(self.typ)
-        #vrat hodnotu
+    #vrat konzumovatelnost
     def get_konzumovatelny(self):
         return(self.konzumovatelny)
+    #vrat hodnotu
     def get_hodnota(self):
         return(self.hodnota)
