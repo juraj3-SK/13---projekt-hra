@@ -222,7 +222,8 @@ while (koniec==0):
     
         #pisat takto s menami premennych
         #vygenerovanyHrac=hrac(id=5, nazov="hrac_jozko", max_zivoty=20, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybava, zlato=10)
-        hrac=hrac(id=5, nazov="hrac_jozko", max_zivoty=20, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybava, zlato=10)
+        if (hrac is None):
+            hrac=hrac(id=5, nazov="hrac_jozko", max_zivoty=20, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybava, zlato=10)
         print("toto este ide2")
         #nie takto:
         #hrac=hrac(5, "hrac_jozko", 10, 10, 30, 1, 10, "mec", 10)
