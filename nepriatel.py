@@ -33,9 +33,4 @@ class class_Nepriatel(class_Postava):
         self.zivoty-=damage
         if (self.zivoty<0):
             self.zivoty=0
-        if (self.func_je_ziva()):
-            print("")
-            print(f"Nepriatel {self.nazov}, a.k.a. id={self.id}, bol zasiahnuty, zostava mu pocet zivotov: {self.zivoty}")
-        else:
-            print("")
-            print(f"Nepriatel {self.nazov}, a.k.a. id={self.id}, bol zabity.")
+        
