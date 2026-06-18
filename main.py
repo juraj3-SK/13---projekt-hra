@@ -1,26 +1,26 @@
 import random
 
-from nepriatelia.drak import drak
-nepriatel_drak=drak(1)
+from nepriatelia.drak import class_Drak
+nepriatel_drak=class_Drak(1)
 
-from nepriatelia.goblin import goblin
-nepriatel_goblin=goblin(2)
+from nepriatelia.goblin import class_Goblin
+nepriatel_goblin=class_Goblin(2)
 
-from nepriatelia.kostlivec import kostlivec
-nepriatel_kostlivec=kostlivec(3)
+from nepriatelia.kostlivec import class_Kostlivec
+nepriatel_kostlivec=class_Kostlivec(3)
 
-from nepriatelia.ork import ork
-nepriatel_ork=ork(4)
+from nepriatelia.ork import class_Ork
+nepriatel_ork=class_Ork(4)
 
-from predmet import predmet
+from predmet import class_Predmet
 
 #zadefinuj slovnik
 #key bude nazov, value bude predmet
 zoznam_predmetov = {
-  "maly_lektvar": predmet(nazov="Maly lektvar", typ="heal", hodnota=2, konzumovatelny=1),
-  "velky_lektvar": predmet(nazov="Velky lektvar", typ="heal", hodnota=50, konzumovatelny=1),
-  "mana_elixir": predmet(nazov="Mana elixir", typ="mana", hodnota=20, konzumovatelny=1),
-  "mec": predmet(nazov="Mec", typ="zbran", hodnota=10, konzumovatelny=0)
+  "maly_lektvar": class_Predmet(nazov="Maly lektvar", typ="heal", hodnota=2, konzumovatelny=1),
+  "velky_lektvar": class_Predmet(nazov="Velky lektvar", typ="heal", hodnota=50, konzumovatelny=1),
+  "mana_elixir": class_Predmet(nazov="Mana elixir", typ="mana", hodnota=20, konzumovatelny=1),
+  "mec": class_Predmet(nazov="Mec", typ="zbran", hodnota=10, konzumovatelny=0)
 }
 
 #stara inicializacia vybavy
@@ -44,7 +44,7 @@ vybava.append(zoznam_predmetov.get("velky_lektvar"))
 vybava.append(zoznam_predmetov.get("mana_elixir"))
 vybava.append(zoznam_predmetov.get("mana_elixir"))
 
-from hrac import hrac
+from hrac import class_Hrac
 
 #nie som si isty, ci to ma byt tu
 #viac by sa mi to pacilo v hracovi, ale tam nemam slovnik, musel by som ho tam poslat ako parameter funkcie
@@ -222,8 +222,7 @@ while (koniec==0):
     
         #pisat takto s menami premennych
         #vygenerovanyHrac=hrac(id=5, nazov="hrac_jozko", max_zivoty=20, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybava, zlato=10)
-        if (hrac is None):
-            hrac=hrac(id=5, nazov="hrac_jozko", max_zivoty=20, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybava, zlato=10)
+        hrac=class_Hrac(id=5, nazov="hrac_jozko", max_zivoty=20, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybava, zlato=10)
         print("toto este ide2")
         #nie takto:
         #hrac=hrac(5, "hrac_jozko", 10, 10, 30, 1, 10, "mec", 10)
@@ -240,7 +239,6 @@ while (koniec==0):
         pass
     elif (operacia1 == 4):
         koniec=1
-        #del hrac
         print ("Koniec hry.")
     else:
         print ("Neznama operacia")

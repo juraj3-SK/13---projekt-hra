@@ -1,7 +1,7 @@
 #toto je hlavna trieda, co sa bude dedit
 import random
 
-class predmet:
+class class_Predmet:
     def __init__(self, nazov, typ, hodnota, konzumovatelny):
         self.nazov=nazov
         self.typ=typ

@@ -1,7 +1,7 @@
 #toto je hlavna trieda, co sa bude dedit
 import random
 
-class postava:
+class class_Postava:
     def __init__(self, id, nazov, max_zivoty, utok, iniciativa):
         self.id=id
         self.nazov=nazov
@@ -10,9 +10,6 @@ class postava:
         self.iniciativa=iniciativa
 
         self.zivoty=self.max_zivoty
-
-    #def __del__(self):
-    #    print (f"Postava {self.nazov} bola zmazana")
 
     def func_zautoc(self, ciel):
         #mohol by som mat spolocnu funkciu_zautoc a cez #if (isinstance(self, hrac)) zistit,

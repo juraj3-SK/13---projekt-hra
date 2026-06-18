@@ -1,8 +1,8 @@
-from postava import postava
+from postava import class_Postava
 
 import random
 
-class nepriatel(postava):
+class class_Nepriatel(class_Postava):
     def __init__(self, id, nazov, max_zivoty, utok, iniciativa, zlato_odmena, xp_odmena):
         super().__init__(id, nazov, max_zivoty, utok, iniciativa)
         self.zlato_odmena=zlato_odmena
