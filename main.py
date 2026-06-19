@@ -23,12 +23,14 @@ zoznam_predmetov = {
   "mec": class_Predmet(nazov="Mec", typ="zbran", hodnota=10, konzumovatelny=0)
 }
 
-vybava=[]
-vybava.append(zoznam_predmetov.get("mec"))
-vybava.append(zoznam_predmetov.get("maly_lektvar"))
-vybava.append(zoznam_predmetov.get("velky_lektvar"))
-vybava.append(zoznam_predmetov.get("mana_elixir"))
-vybava.append(zoznam_predmetov.get("mana_elixir"))
+def func_generuj_vybavu():
+    vybava=[]
+    vybava.append(zoznam_predmetov.get("mec"))
+    vybava.append(zoznam_predmetov.get("maly_lektvar"))
+    vybava.append(zoznam_predmetov.get("velky_lektvar"))
+    vybava.append(zoznam_predmetov.get("mana_elixir"))
+    vybava.append(zoznam_predmetov.get("mana_elixir"))
+    return vybava
 
 from hrac import class_Hrac
 
@@ -243,7 +245,8 @@ def func_uvodne_menu():
             print("Vytvaram noveho hraca.")
             #pisat takto s menami premennych
             #vygenerovanyHrac=hrac(id=5, nazov="hrac_jozko", max_zivoty=20, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybava, zlato=10)
-            hrac=class_Hrac(id=5, nazov="hrac_jozko", max_zivoty=20, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybava, zlato=10)
+            vybavicka=func_generuj_vybavu()
+            hrac=class_Hrac(id=5, nazov="hrac_jozko", max_zivoty=20, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybavicka, zlato=10)
             #nie takto:
             #hrac=hrac(5, "hrac_jozko", 10, 10, 30, 1, 10, "mec", 10)
             #print (vygenerovanyHrac)
