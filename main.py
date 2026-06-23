@@ -119,6 +119,24 @@ def func_moj_vstup(*moznosti):
     operaciaX=input(text)
     return operaciaX
 
+def vypis_databazu():
+    #tu sa nacita zoznam hracov z databazy
+    nacitani_hraci=databaza.nacitaj_vsetkych_hracov()
+    if (len(nacitani_hraci)==0):
+        print("")
+        print("v databaze nie su ulozeni ziadni hraci.")
+        return
+    else:
+        zoznam_hracov=[]
+        counter=0
+        print("")
+        print("Zoznam hracov v databaze:")
+        for nacitany_hrac in nacitani_hraci:
+            tempList=[nacitany_hrac[0], nacitany_hrac[1]]
+            zoznam_hracov.append(tempList)
+            print(f"{nacitany_hrac[0]}. hrac je {nacitany_hrac[1]}.")
+        return(zoznam_hracov)
+
 def func_spustena_hra(hrac):
     #velky while bezi, kym je hrac zivy, alebo sa chce hrat
     while (hrac.func_je_ziva()):
@@ -245,6 +263,8 @@ def func_spustena_hra(hrac):
             print("Neznama operacia2")
     
 def func_uvodne_menu():
+    #vytvorime databazu uz tu, aby som nemusel neskor testovat, ci nejaku mam
+    databaza.vytvor_databazu()
     while (True):
         operacia1 = func_moj_vstup("nova hra", "nacitaj hru", "zoznam ulozenych hracov", "koniec")
         if (operacia1 == "1"):
@@ -261,12 +281,13 @@ def func_uvodne_menu():
             func_spustena_hra(hrac)
 
         elif (operacia1 == "2"):
-            #tu sa bude citat databaza
-            continue
-            #func_spustena_hra(nacitany_hrac)
+            #continue
+            #vypise databazu plus ponukne vyber hraca
+            zoznam_hracov=vypis_databazu()
+            
         elif (operacia1 == "3"):
-            #tu sa nacita zoznam hracov z databazy
-            continue
+            #len vypic satabazy
+            zoznam_hracov=vypis_databazu()
         elif (operacia1 == "4"):
             print ("Koniec hry.")
             break
