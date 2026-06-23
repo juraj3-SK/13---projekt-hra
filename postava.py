@@ -44,3 +44,8 @@ class class_Postava:
     #vrat id
     def get_id(self):
         return(self.id)
+    
+    #setters
+    #nastav nazov
+    def set_nazov(self, nazov):
+        self.nazov(nazov)

@@ -5,6 +5,7 @@ import random
 class class_Hrac(class_Postava):
     #nerobit cez inventar=[] ale cez inventar=None a IF o riadok nizsie (kde inventar vyrobim/zadefinujem), inak moze viac premennych inventar ukazovat na rovnake miesto v pamati
     #tyka sa aj tupple a pod., co ma za rovna_sa nieco ine ako cislo
+    
     def __init__(self, id, nazov, max_zivoty, utok, iniciativa, mana, level=1, xp=0, inventar=None, zlato=0):
         
         if (inventar is None):

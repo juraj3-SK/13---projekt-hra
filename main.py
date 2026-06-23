@@ -14,6 +14,11 @@ from nepriatelia.ork import class_Ork
 
 from predmet import class_Predmet
 
+from databaza import class_db_hry
+cesta_k_databaze="db_hry.db"
+databaza=class_db_hry(cesta_k_databaze)
+databaza.vytvor_databazu()
+
 #zadefinuj slovnik
 #key bude nazov, value bude predmet
 zoznam_predmetov = {
@@ -230,6 +235,7 @@ def func_spustena_hra(hrac):
             #pass        
             continue
         elif (operacia2 == "7"):
+            databaza.uloz_hraca(hrac)
             #tu raz bude ukladanie do DB
             #pass
             continue
@@ -242,11 +248,13 @@ def func_uvodne_menu():
     while (True):
         operacia1 = func_moj_vstup("nova hra", "nacitaj hru", "zoznam ulozenych hracov", "koniec")
         if (operacia1 == "1"):
-            print("Vytvaram noveho hraca.")
+            meno_hraca=input("Vytvorme noveho hraca. Zadaj meno:")
+            #if meno existuje v databaze, odmietni meno
+            #if meno neexistuje v databaze urob hraca
             #pisat takto s menami premennych
             #vygenerovanyHrac=hrac(id=5, nazov="hrac_jozko", max_zivoty=20, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybava, zlato=10)
             vybavicka=func_generuj_vybavu()
-            hrac=class_Hrac(id=5, nazov="hrac_jozko", max_zivoty=20, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybavicka, zlato=10)
+            hrac=class_Hrac(id=5, nazov=meno_hraca, max_zivoty=20, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybavicka, zlato=10)
             #nie takto:
             #hrac=hrac(5, "hrac_jozko", 10, 10, 30, 1, 10, "mec", 10)
             #print (vygenerovanyHrac)
