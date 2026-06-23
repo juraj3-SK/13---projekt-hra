@@ -79,13 +79,13 @@ class class_db_hry:
         nacitany_hrac=self.cursor.fetchone()
         return nacitany_hrac
 
-
-    # def nacitaj_vsetkych_hracov(self, hrac):
-    #     #tabulka hraci
-    #     self.cursor.execute("""
-    #         SELECT * FROM hraci
-    #         """)
-    #     self.conn.commit()
+    def nacitaj_vsetkych_hracov(self):
+        #tabulka hraci
+        self.cursor.execute("""
+            SELECT * FROM hraci
+            """)
+        nacitani_hraci=self.cursor.fetchall()
+        return nacitani_hraci
 
     def func_zavri_db(self):
         self.conn.close()
