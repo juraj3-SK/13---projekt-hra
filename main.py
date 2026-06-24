@@ -284,7 +284,23 @@ def func_uvodne_menu():
             #continue
             #vypise databazu plus ponukne vyber hraca
             zoznam_hracov=vypis_databazu()
-            
+            vyber_hraca = input("Vyber si hraca (0 = navrat): ")
+            #asi to predsa len musim castnut na int
+            vyber_hraca = int(vyber_hraca)
+            lst2 = [item[0] for item in zoznam_hracov]
+            print(lst2)
+            if (vyber_hraca == 0):
+                #sem este nieco mozno dopisem
+                print("")
+                print("Vyberas si navrat.")
+                #continue
+            elif vyber_hraca in zoznam_hracov:
+                print("")
+                print("vyberas hraca zo zoznamu hracov")
+                #print(vyber_hraca)
+                #continue
+
+                
         elif (operacia1 == "3"):
             #len vypic satabazy
             zoznam_hracov=vypis_databazu()
