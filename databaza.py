@@ -10,6 +10,8 @@ class class_db_hry:
         self.conn.execute("PRAGMA foreign_keys = ON")
         self.cursor=self.conn.cursor()
 
+        self.path=path
+
     def vytvor_databazu(self):
         #tabulka hraci
         #tabulka inventar
@@ -89,3 +91,7 @@ class class_db_hry:
 
     def func_zavri_db(self):
         self.conn.close()
+
+    def func_otvor_db(self):
+        self.conn=sqlite3.connect(self.path)
+        self.cursor=self.conn.cursor()

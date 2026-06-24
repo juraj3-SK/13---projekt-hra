@@ -18,6 +18,8 @@ from databaza import class_db_hry
 cesta_k_databaze="db_hry.db"
 databaza=class_db_hry(cesta_k_databaze)
 databaza.vytvor_databazu()
+#pre istotu rovno zavriem
+databaza.func_zavri_db()
 
 #zadefinuj slovnik
 #key bude nazov, value bude predmet
@@ -121,7 +123,9 @@ def func_moj_vstup(*moznosti):
 
 def vypis_databazu():
     #tu sa nacita zoznam hracov z databazy
+    databaza.func_otvor_db()
     nacitani_hraci=databaza.nacitaj_vsetkych_hracov()
+    databaza.func_zavri_db()
     if (len(nacitani_hraci)==0):
         print("")
         print("v databaze nie su ulozeni ziadni hraci.")
@@ -264,7 +268,6 @@ def func_spustena_hra(hrac):
     
 def func_uvodne_menu():
     #vytvorime databazu uz tu, aby som nemusel neskor testovat, ci nejaku mam
-    databaza.vytvor_databazu()
     while (True):
         operacia1 = func_moj_vstup("nova hra", "nacitaj hru", "zoznam ulozenych hracov", "koniec")
         if (operacia1 == "1"):
@@ -299,8 +302,6 @@ def func_uvodne_menu():
                 print("vyberas hraca zo zoznamu hracov")
                 #print(vyber_hraca)
                 #continue
-
-                
         elif (operacia1 == "3"):
             #len vypic satabazy
             zoznam_hracov=vypis_databazu()
