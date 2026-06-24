@@ -57,9 +57,20 @@ class class_db_hry:
         #toto ide pred commit!!!
         hrac.id=self.cursor.lastrowid
         self.conn.commit()
-        
+    
+    def uloz_existujuceho_hraca(self, hrac):
+        #tabulka hraci (id nevkladam, to mi urobi DB (tabulka) automaticky, cize posielam o jeden parameter menej!)
+        self.cursor.execute("""
+            UPDATE hraci
+            SET nazov=?, max_zivoty=?, zivoty=?, utok=?, iniciativa=?, mana=?, level=?, xp=?, zlato=?
+            WHERE id=?
+            """,(hrac.nazov, hrac.max_zivoty, hrac.zivoty, hrac.utok, hrac.iniciativa, hrac.mana, hrac.level, hrac.xp, hrac.zlato, hrac.id))
+        self.conn.commit()
     
     def uloz_inventar(self, hrac):
+        
+        #nieco na tento styl DELETE FROM INVENTAR WHERE ID=hrac.id
+        #narvat novy inventar ako nizsie (cez INSERT)
         #tabulka inventar
         for predmet in hrac.inventar:
             self.cursor.execute("""

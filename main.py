@@ -136,9 +136,11 @@ def vypis_databazu():
         print("")
         print("Zoznam hracov v databaze:")
         for nacitany_hrac in nacitani_hraci:
-            tempList=[nacitany_hrac[0], nacitany_hrac[1]]
+            id=nacitany_hrac[0]
+            meno=nacitany_hrac[1]
+            tempList=[id, meno]
             zoznam_hracov.append(tempList)
-            print(f"{nacitany_hrac[0]}. hrac je {nacitany_hrac[1]}.")
+            print(f"{id}. hrac je {meno}.")
         return(zoznam_hracov)
 
 def func_spustena_hra(hrac):
@@ -257,10 +259,9 @@ def func_spustena_hra(hrac):
             #pass        
             continue
         elif (operacia2 == "7"):
-            databaza.uloz_hraca(hrac)
-            #tu raz bude ukladanie do DB
-            #pass
-            continue
+            databaza.func_otvor_db()
+            databaza.uloz_existujuceho_hraca(hrac)
+            databaza.func_zavri_db()
         elif (operacia2 == "8"):
             break
         else:
@@ -269,15 +270,18 @@ def func_spustena_hra(hrac):
 def func_uvodne_menu():
     #vytvorime databazu uz tu, aby som nemusel neskor testovat, ci nejaku mam
     while (True):
+        #TODO operacia1 = func_moj_vstup("nova hra", "nacitaj hru", "zoznam ulozenych hracov", "vymaz hrac", "koniec")
         operacia1 = func_moj_vstup("nova hra", "nacitaj hru", "zoznam ulozenych hracov", "koniec")
         if (operacia1 == "1"):
             meno_hraca=input("Vytvorme noveho hraca. Zadaj meno:")
-            #if meno existuje v databaze, odmietni meno
-            #if meno neexistuje v databaze urob hraca
+
             #pisat takto s menami premennych
             #vygenerovanyHrac=hrac(id=5, nazov="hrac_jozko", max_zivoty=20, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybava, zlato=10)
             vybavicka=func_generuj_vybavu()
-            hrac=class_Hrac(id=5, nazov=meno_hraca, max_zivoty=20, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybavicka, zlato=10)
+            hrac=class_Hrac(id=None, nazov=meno_hraca, max_zivoty=20, utok=10, iniciativa=10, mana=30, level=1, xp=10, inventar=vybavicka, zlato=10)
+            databaza.func_otvor_db()
+            databaza.uloz_hraca(hrac)
+            databaza.func_zavri_db()
             #nie takto:
             #hrac=hrac(5, "hrac_jozko", 10, 10, 30, 1, 10, "mec", 10)
             #print (vygenerovanyHrac)
@@ -291,7 +295,27 @@ def func_uvodne_menu():
             #asi to predsa len musim castnut na int
             vyber_hraca = int(vyber_hraca)
             lst2 = [item[0] for item in zoznam_hracov]
-            print(lst2)
+            if (vyber_hraca in lst2):
+                #nh=nacitany hrac
+                databaza.func_otvor_db()
+                nh=databaza.nacitaj_hraca(vyber_hraca)
+                databaza.func_zavri_db()
+                hrac=class_Hrac(
+                    id=nh[0],
+                    nazov=nh[1],
+                    max_zivoty=nh[2],
+                    utok=nh[4],
+                    iniciativa=nh[5],
+                    mana=nh[6],
+                    level=nh[7],
+                    xp=nh[8],
+                    zlato=nh[9])
+                hrac.zivoty=nh[3]
+                #TODO dokoncit ukladanie inventaru
+                hrac.inventar=[]
+                func_spustena_hra(hrac)
+            else:
+                print("Takehoto hraca nemas ulozeneho. Vyber si ineho.")
             if (vyber_hraca == 0):
                 #sem este nieco mozno dopisem
                 print("")

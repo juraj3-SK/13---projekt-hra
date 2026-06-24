@@ -1,13 +1,13 @@
 import sqlite3
 import pytest
 
-from databaza import db_hry
+from databaza import class_db_hry
 from predmet import class_Predmet
 
 class TestHrac:
-    def __init__(self):
+    def __init__(self, meno_hraca="test_hrac"):
         self.id = None
-        self.nazov = "test_hrac"
+        self.nazov = meno_hraca
         self.max_zivoty = 100
         self.zivoty = 80
         self.utok = 15
@@ -28,7 +28,7 @@ class TestHrac:
 def db(tmp_path):
     cesta_db = tmp_path / "test_db_hry.db"
 
-    databaza = db_hry(str(cesta_db))
+    databaza = class_db_hry(str(cesta_db))
     databaza.vytvor_databazu()
 
     yield databaza
@@ -65,6 +65,56 @@ def test_uloz_hraca(db):
     assert nacitany_hrac==(
         hrac.id,
         "test_hrac",
+        100,
+        80,
+        15,
+        10,
+        30,
+        2,
+        5,
+        50
+        )
+
+def test_nacitaj_nula_hracov(db):
+    nacitani_hraci=db.nacitaj_vsetkych_hracov()
+    #skumam ci je zoznam prazdny (a.k.a. ma nulovu dlzku)
+    assert (len(nacitani_hraci)==0)
+    #alebo este inak povedane to iste co hore, ci je zoznam prazdny
+    #pre istotu nechavam obe, ak by nastal nejaky patologicky pripad, ze jeden assert zbehne a druhy nie
+    assert (nacitani_hraci==[])
+
+def test_nacitaj_jedneho_hraca(db):
+    hrac=TestHrac()
+    db.uloz_hraca(hrac)
+    nacitani_hraci=db.nacitaj_vsetkych_hracov()
+    #skumam ci je zoznam prazdny (a.k.a. ma nulovu dlzku)
+    assert (len(nacitani_hraci)==1)
+    assert nacitani_hraci==[(
+        hrac.id,
+        "test_hrac",
+        100,
+        80,
+        15,
+        10,
+        30,
+        2,
+        5,
+        50
+    )]
+
+def test_nacitaj_viac_hracov(db):
+    hraci=[TestHrac("th1"), TestHrac("th2"), TestHrac("th3")]
+    for hrac in hraci:
+        db.uloz_hraca(hrac)
+
+    nacitani_hraci=db.nacitaj_vsetkych_hracov()
+    
+    assert (len(nacitani_hraci)==3)
+    
+    for i, hrac in enumerate(hraci):
+        assert nacitani_hraci[i]==(
+        hrac.id,
+        hrac.nazov,
         100,
         80,
         15,
